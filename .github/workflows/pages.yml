@@ -1,0 +1,34 @@
+# Test, build the static site (Python engine runs in the browser) and publish it to GitHub Pages.
+name: pages
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+  workflow_run:            # the daily data commit is pushed with GITHUB_TOKEN, which does not trigger `push`
+    workflows: [data]
+    types: [completed]
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency: { group: pages, cancel-in-progress: true }
+jobs:
+  build:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: main }
+      - uses: astral-sh/setup-uv@v5
+      - run: uv sync
+      - run: uv run pytest -q
+      - run: python3 scripts/build_static.py
+      - uses: actions/upload-pages-artifact@v3
+        with: { path: dist }
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment: { name: github-pages, url: "${{ steps.d.outputs.page_url }}" }
+    steps:
+      - id: d
+        uses: actions/deploy-pages@v4
