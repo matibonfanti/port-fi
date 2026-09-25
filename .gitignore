@@ -1,0 +1,10 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.hypothesis/
+.DS_Store
+data/cache/
+dist/
+.claude/
+.vercel

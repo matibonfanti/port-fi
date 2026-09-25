@@ -1,0 +1,11 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "installCommand": "echo 'no install: static build uses the Python stdlib only'",
+  "buildCommand": "python3 scripts/build_static.py",
+  "outputDirectory": "dist",
+  "headers": [
+    { "source": "/engine.zip", "headers": [{ "key": "Cache-Control", "value": "public, max-age=3600, must-revalidate" }] },
+    { "source": "/vendor/(.*)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }] }
+  ]
+}

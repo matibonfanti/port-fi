@@ -1,0 +1,113 @@
+{
+ "rates": {
+  "sofr": {
+   "rate": 3.87,
+   "date": "2026-09-23"
+  },
+  "effr": {
+   "rate": 3.88,
+   "date": "2026-09-23",
+   "target": [
+    3.75,
+    4.0
+   ]
+  }
+ },
+ "otr": [
+  {
+   "issue": "2026-08-31",
+   "cusip": "91282CRH6",
+   "coupon": 4.125,
+   "maturity": "2028-08-31",
+   "term": 2,
+   "tips": false,
+   "label": "T 4.125 08/31/28"
+  },
+  {
+   "issue": "2026-09-15",
+   "cusip": "91282CRL7",
+   "coupon": 4.375,
+   "maturity": "2029-09-15",
+   "term": 3,
+   "tips": false,
+   "label": "T 4.375 09/15/29"
+  },
+  {
+   "issue": "2026-08-31",
+   "cusip": "91282CRK9",
+   "coupon": 4.375,
+   "maturity": "2031-08-31",
+   "term": 5,
+   "tips": false,
+   "label": "T 4.375 08/31/31"
+  },
+  {
+   "issue": "2026-08-31",
+   "cusip": "91282CRJ2",
+   "coupon": 4.5,
+   "maturity": "2033-08-31",
+   "term": 7,
+   "tips": false,
+   "label": "T 4.5 08/31/33"
+  },
+  {
+   "issue": "2026-09-15",
+   "cusip": "91282CRF0",
+   "coupon": 4.625,
+   "maturity": "2036-08-15",
+   "term": 10,
+   "tips": false,
+   "label": "T 4.625 08/15/36"
+  },
+  {
+   "issue": "2026-09-18",
+   "cusip": "912810UX4",
+   "coupon": 5.125,
+   "maturity": "2046-08-15",
+   "term": 20,
+   "tips": false,
+   "label": "T 5.125 08/15/46"
+  },
+  {
+   "issue": "2026-09-15",
+   "cusip": "912810UW6",
+   "coupon": 5.125,
+   "maturity": "2056-08-15",
+   "term": 30,
+   "tips": false,
+   "label": "T 5.125 08/15/56"
+  }
+ ],
+ "otr_tips": [
+  {
+   "issue": "2026-06-30",
+   "cusip": "91282CQP9",
+   "coupon": 1.25,
+   "maturity": "2031-04-15",
+   "term": 5,
+   "tips": true,
+   "label": "TII 1.25 04/15/31"
+  },
+  {
+   "issue": "2026-07-31",
+   "cusip": "91282CRE3",
+   "coupon": 2.375,
+   "maturity": "2036-07-15",
+   "term": 10,
+   "tips": true,
+   "label": "TII 2.375 07/15/36"
+  },
+  {
+   "issue": "2026-08-31",
+   "cusip": "912810US5",
+   "coupon": 2.375,
+   "maturity": "2056-02-15",
+   "term": 30,
+   "tips": true,
+   "label": "TII 2.375 02/15/56"
+  }
+ ],
+ "built": "2026-09-24T23:32+00:00",
+ "nominal_last": "2026-09-24",
+ "real_last": "2026-09-24"
+}
