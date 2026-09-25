@@ -3,10 +3,10 @@ import datetime as dt
 
 import pytest
 
-from port.config import CACHE_DIR
+from port.config import SNAPSHOT_DIR
 from port.paths.policy import meetings_after
 
-pytestmark = pytest.mark.skipif(not any(CACHE_DIR.glob("ust_par_*.csv")), reason="no cached Treasury data")
+pytestmark = pytest.mark.skipif(not (SNAPSHOT_DIR / "ust_par.csv").exists(), reason="no data snapshot")
 
 POS = {"items": [{"kind": "bond", "bond": {"tenor": 10}, "face_mm": 1},
                  {"kind": "butterfly", "legs": [{"tenor": 2}, {"tenor": 5}, {"tenor": 10}], "weighting": "pca", "size_mm": 1}],
@@ -34,3 +34,12 @@ def test_analyze_end_to_end(asof, view):
     assert r["summary"]["sentences"] and r["heatmap"]["pnl"] and r["risk"]["mc"]["n"] == 4000
     if view["anchor"] == "forwards" and not view.get("builder"):
         assert abs(r["attribution"]["edge"]["total"][-1]) < 1e-7 * gross
+
+
+def test_fomc_page_parser():
+    from port.data.fomc import parse
+    html = ('2027 FOMC Meetings <div class="fomc-meeting__month"><strong>January</strong></div>'
+            '<div class="fomc-meeting__date">26-27</div> <div class="fomc-meeting__month"><strong>Apr/May</strong></div>'
+            '<div class="fomc-meeting__date">30-1*</div> <div class="fomc-meeting__month"><strong>June</strong></div>'
+            '<div class="fomc-meeting__date">8-9*</div>')
+    assert parse(html) == ["2027-01-27", "2027-05-01", "2027-06-09"]

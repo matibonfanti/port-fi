@@ -17,7 +17,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from port.config import SNAPSHOT_DIR  # noqa: E402
 from port.curves import history  # noqa: E402
-from port.data import market, treasury  # noqa: E402
+from port.data import fomc, market, treasury  # noqa: E402
 
 
 def main():
@@ -42,6 +42,13 @@ def main():
         refs.update(market.fetch_securities(latest))
     except Exception as e:
         print(f"WARNING securities: {e}", file=sys.stderr)
+    try:
+        dates = fomc.fetch()
+        (SNAPSHOT_DIR / "fomc.json").write_text(json.dumps({"source": fomc.URL, "dates": dates,
+                                                            "built": dt.date.today().isoformat()}, indent=1))
+        print(f"fomc: {len(dates)} dates {dates[0]}..{dates[-1]}")
+    except Exception as e:  # keep the previous calendar; policy dates beyond it are flagged as estimated
+        print(f"WARNING fomc: {e}", file=sys.stderr)
     old = market.snapshot_market()
     out = {**old, **refs, "built": dt.datetime.now(dt.timezone.utc).isoformat(timespec="minutes"),
            "nominal_last": nom.last.isoformat(), "real_last": real.last.isoformat()}

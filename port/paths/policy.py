@@ -30,8 +30,14 @@ TP_TENORS = [2.0, 5.0, 10.0, 30.0]
 def meetings_after(asof: dt.date, max_years: float = 3.0):
     """FOMC decisions within max_years of asof. Where the calendar has no dates (historical as-of
     dates, or far future) the schedule is filled with estimated meetings every 365/8 days."""
+    from ..data.fomc import confirmed
+
+    conf = confirmed()
+    covered = {int(d[:4]) for d in conf}
+    cal = [(d, False) for d in conf] + [(d, True if int(d[:4]) not in covered else e)
+                                        for d, e in FOMC_MEETINGS if int(d[:4]) not in covered]
     out = []
-    for d, est in FOMC_MEETINGS:
+    for d, est in sorted(cal):
         dd = parse_date(d)
         eff = dd + dt.timedelta(days=1)  # decision effective the next day
         t = year_frac(asof, eff)
